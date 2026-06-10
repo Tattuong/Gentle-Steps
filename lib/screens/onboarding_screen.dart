@@ -20,6 +20,7 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
     final features = [
       ('👟', AppStrings.t(context, 'onboardingFeature1')),
       ('📊', AppStrings.t(context, 'onboardingFeature2')),
@@ -28,7 +29,7 @@ class OnboardingScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(gradient: AppColors.softGradient),
+        decoration: BoxDecoration(gradient: colors.softGradient),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -46,7 +47,7 @@ class OnboardingScreen extends StatelessWidget {
                 Text(
                   AppStrings.t(context, 'onboardingSubtitle'),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 16, height: 1.5),
+                  style: TextStyle(color: colors.onSurfaceVariant, fontSize: 16, height: 1.5),
                 ),
                 const SizedBox(height: 36),
                 ...features.map(
@@ -54,8 +55,9 @@ class OnboardingScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.surface.withValues(alpha: 0.8),
+                      color: colors.surface.withValues(alpha: 0.85),
                       borderRadius: BorderRadius.circular(16),
+                      border: colors.cardBorder != null ? Border.all(color: colors.cardBorder!) : null,
                     ),
                     child: Row(
                       children: [
@@ -77,7 +79,7 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () => _finish(context),
-                  child: Text(AppStrings.t(context, 'skip'), style: const TextStyle(color: AppColors.onSurfaceVariant)),
+                  child: Text(AppStrings.t(context, 'skip'), style: TextStyle(color: colors.onSurfaceVariant)),
                 ),
               ],
             ),

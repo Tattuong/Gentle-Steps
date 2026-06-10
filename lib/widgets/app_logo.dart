@@ -14,6 +14,8 @@ class AppLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
+
     return Container(
       width: size,
       height: size,
@@ -22,7 +24,7 @@ class AppLogo extends StatelessWidget {
               borderRadius: BorderRadius.circular(size * 0.28),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.35),
+                  color: colors.primary.withValues(alpha: 0.35),
                   blurRadius: size * 0.25,
                   offset: Offset(0, size * 0.1),
                 ),

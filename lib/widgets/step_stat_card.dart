@@ -7,7 +7,6 @@ class StepStatCard extends StatelessWidget {
   final String label;
   final String value;
   final String? suffix;
-  final bool wide;
 
   const StepStatCard({
     super.key,
@@ -15,42 +14,30 @@ class StepStatCard extends StatelessWidget {
     required this.label,
     required this.value,
     this.suffix,
-    this.wide = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
+
     return Container(
-      width: wide ? double.infinity : null,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4)),
-        ],
-      ),
+      padding: const EdgeInsets.all(16),
+      decoration: colors.cardDecoration(radius: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(icon, style: const TextStyle(fontSize: 24)),
+          Text(icon, style: const TextStyle(fontSize: 22)),
           const SizedBox(height: 8),
-          Text(label, style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 12)),
+          Text(label, style: TextStyle(color: colors.onSurfaceVariant, fontSize: 12)),
           const SizedBox(height: 4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              Flexible(
-                child: Text(
-                  value,
-                  style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w800),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
+              Text(value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
               if (suffix != null) ...[
                 const SizedBox(width: 4),
-                Text(suffix!, style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 13)),
+                Text(suffix!, style: TextStyle(color: colors.onSurfaceVariant, fontSize: 13)),
               ],
             ],
           ),

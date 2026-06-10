@@ -15,6 +15,7 @@ class AppBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
     final items = [
       _NavItem(Icons.directions_walk_outlined, Icons.directions_walk, 'home'),
       _NavItem(Icons.bar_chart_outlined, Icons.bar_chart, 'stats'),
@@ -24,8 +25,15 @@ class AppBottomNav extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 12, offset: const Offset(0, -2))],
+        color: colors.surface,
+        border: colors.cardBorder != null ? Border(top: BorderSide(color: colors.cardBorder!)) : null,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: colors.cardShadowOpacity),
+            blurRadius: 12,
+            offset: const Offset(0, -2),
+          ),
+        ],
       ),
       child: SafeArea(
         child: Padding(
@@ -45,7 +53,7 @@ class AppBottomNav extends StatelessWidget {
                       children: [
                         Icon(
                           active ? item.activeIcon : item.icon,
-                          color: active ? AppColors.primary : AppColors.onSurfaceVariant,
+                          color: active ? colors.primary : colors.onSurfaceVariant,
                           size: 24,
                         ),
                         const SizedBox(height: 2),
@@ -54,7 +62,7 @@ class AppBottomNav extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-                            color: active ? AppColors.primary : AppColors.onSurfaceVariant,
+                            color: active ? colors.primary : colors.onSurfaceVariant,
                           ),
                         ),
                       ],

@@ -35,6 +35,7 @@ class _StepSettingsScreenState extends State<StepSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
     final themeProvider = context.watch<ThemeProvider>();
     final localeProvider = context.watch<LocaleProvider>();
     final stepProvider = context.watch<StepProvider>();
@@ -56,10 +57,11 @@ class _StepSettingsScreenState extends State<StepSettingsScreen> {
                   label: Text('${g ~/ 1000}k'),
                   selected: selected,
                   onSelected: (_) => stepProvider.setGoal(g),
-                  selectedColor: AppColors.primary.withValues(alpha: 0.2),
+                  selectedColor: colors.primary.withValues(alpha: 0.2),
+                  backgroundColor: colors.surfaceVariant,
                   labelStyle: TextStyle(
                     fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                    color: selected ? AppColors.primary : AppColors.onSurface,
+                    color: selected ? colors.primary : colors.onSurface,
                   ),
                 );
               }).toList(),
@@ -97,10 +99,10 @@ class _StepSettingsScreenState extends State<StepSettingsScreen> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.12),
+                  color: colors.primary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.notifications_outlined, color: AppColors.primary),
+                child: Icon(Icons.notifications_outlined, color: colors.primary),
               ),
               title: Text(AppStrings.t(context, 'reminders'), style: const TextStyle(fontWeight: FontWeight.w600)),
               subtitle: Text(
@@ -119,22 +121,22 @@ class _StepSettingsScreenState extends State<StepSettingsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.t(context, 'widgetDesc'), style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14)),
+                Text(AppStrings.t(context, 'widgetDesc'), style: TextStyle(color: colors.onSurfaceVariant, fontSize: 14)),
                 const SizedBox(height: 8),
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceVariant.withValues(alpha: 0.5),
+                    color: colors.surfaceVariant,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.widgets_outlined, color: AppColors.primary, size: 20),
+                      Icon(Icons.widgets_outlined, color: colors.primary, size: 20),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
                           AppStrings.t(context, 'widgetHint'),
-                          style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                          style: TextStyle(fontSize: 13, color: colors.onSurfaceVariant),
                         ),
                       ),
                     ],
@@ -149,12 +151,12 @@ class _StepSettingsScreenState extends State<StepSettingsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.t(context, 'aboutDesc'), style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14, height: 1.5)),
+                Text(AppStrings.t(context, 'aboutDesc'), style: TextStyle(color: colors.onSurfaceVariant, fontSize: 14, height: 1.5)),
                 const SizedBox(height: 12),
                 if (_version.isNotEmpty)
-                  Text('${AppStrings.t(context, 'version')}: $_version', style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant)),
+                  Text('${AppStrings.t(context, 'version')}: $_version', style: TextStyle(fontSize: 13, color: colors.onSurfaceVariant)),
                 const SizedBox(height: 8),
-                Text(AppStrings.t(context, 'copyright'), style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                Text(AppStrings.t(context, 'copyright'), style: TextStyle(fontSize: 12, color: colors.onSurfaceVariant)),
               ],
             ),
           ),
@@ -181,13 +183,11 @@ class _Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4))],
-      ),
+      decoration: colors.cardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

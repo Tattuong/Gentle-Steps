@@ -19,18 +19,13 @@ class StepWeekChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
     final maxVal = steps.isEmpty ? goal.toDouble() : steps.reduce((a, b) => a > b ? a : b).toDouble();
     final maxY = (maxVal * 1.2).clamp(goal.toDouble(), goal * 1.5);
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4)),
-        ],
-      ),
+      decoration: colors.cardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,7 +41,7 @@ class StepWeekChart extends StatelessWidget {
                   show: true,
                   drawVerticalLine: false,
                   getDrawingHorizontalLine: (v) => FlLine(
-                    color: AppColors.onSurfaceVariant.withValues(alpha: 0.1),
+                    color: colors.onSurfaceVariant.withValues(alpha: 0.15),
                     strokeWidth: 1,
                   ),
                 ),
@@ -62,7 +57,7 @@ class StepWeekChart extends StatelessWidget {
                         if (v == 0) return const SizedBox();
                         return Text(
                           _shortNum(v.toInt()),
-                          style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+                          style: TextStyle(fontSize: 10, color: colors.onSurfaceVariant),
                         );
                       },
                     ),
@@ -77,7 +72,7 @@ class StepWeekChart extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
                             dayLabels[i],
-                            style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                            style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant),
                           ),
                         );
                       },
@@ -88,7 +83,7 @@ class StepWeekChart extends StatelessWidget {
                   final count = steps[i];
                   final ratio = goal == 0 ? 0.0 : count / goal;
                   final color = count == 0
-                      ? AppColors.onSurfaceVariant.withValues(alpha: 0.15)
+                      ? colors.onSurfaceVariant.withValues(alpha: 0.15)
                       : AppColors.progressColor(ratio.clamp(0.0, 1.0));
                   return BarChartGroupData(
                     x: i,

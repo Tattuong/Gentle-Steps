@@ -46,10 +46,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
+
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(gradient: AppColors.softGradient),
+        decoration: BoxDecoration(gradient: colors.softGradient),
         child: ScaleTransition(
           scale: _scaleAnim,
           child: Column(
@@ -59,19 +61,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               const SizedBox(height: 24),
               Text(
                 AppStrings.t(context, 'appName'),
-                style: const TextStyle(color: AppColors.onSurface, fontSize: 32, fontWeight: FontWeight.w800),
+                style: TextStyle(color: colors.onSurface, fontSize: 32, fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 8),
               Text(
                 AppStrings.t(context, 'appTagline'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14),
+                style: TextStyle(color: colors.onSurfaceVariant, fontSize: 14),
               ),
               const SizedBox(height: 40),
-              const SizedBox(
+              SizedBox(
                 width: 28,
                 height: 28,
-                child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2.5),
+                child: CircularProgressIndicator(color: colors.primary, strokeWidth: 2.5),
               ),
             ],
           ),

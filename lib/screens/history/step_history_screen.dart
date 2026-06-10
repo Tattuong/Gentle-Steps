@@ -34,6 +34,7 @@ class _StepHistoryScreenState extends State<StepHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
     final provider = context.watch<StepProvider>();
     final locale = Localizations.localeOf(context).languageCode;
     final monthLabel = DateFormat('MMMM yyyy', locale).format(_month);
@@ -49,13 +50,7 @@ class _StepHistoryScreenState extends State<StepHistoryScreen> {
           const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4)),
-              ],
-            ),
+            decoration: colors.cardDecoration(),
             child: Column(
               children: [
                 Row(
@@ -79,7 +74,7 @@ class _StepHistoryScreenState extends State<StepHistoryScreen> {
                   ].map((d) {
                     return Expanded(
                       child: Center(
-                        child: Text(d, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600)),
+                        child: Text(d, style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant, fontWeight: FontWeight.w600)),
                       ),
                     );
                   }).toList(),
@@ -108,10 +103,10 @@ class _StepHistoryScreenState extends State<StepHistoryScreen> {
                         color: isFuture
                             ? Colors.transparent
                             : steps == 0
-                                ? AppColors.surfaceVariant.withValues(alpha: 0.4)
-                                : AppColors.progressColor(ratio.clamp(0.0, 1.0)).withValues(alpha: 0.15 + ratio * 0.35),
+                                ? colors.surfaceVariant.withValues(alpha: 0.5)
+                                : AppColors.progressColor(ratio.clamp(0.0, 1.0)).withValues(alpha: isDark(context) ? 0.25 + ratio * 0.45 : 0.15 + ratio * 0.35),
                         borderRadius: BorderRadius.circular(10),
-                        border: isToday ? Border.all(color: AppColors.primary, width: 2) : null,
+                        border: isToday ? Border.all(color: colors.primary, width: 2) : null,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -121,13 +116,13 @@ class _StepHistoryScreenState extends State<StepHistoryScreen> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: isToday ? FontWeight.w800 : FontWeight.w600,
-                              color: isFuture ? AppColors.onSurfaceVariant.withValues(alpha: 0.4) : AppColors.onSurface,
+                              color: isFuture ? colors.onSurfaceVariant.withValues(alpha: 0.4) : colors.onSurface,
                             ),
                           ),
                           if (!isFuture && steps > 0)
                             Text(
                               steps >= 1000 ? '${(steps / 1000).toStringAsFixed(1)}k' : '$steps',
-                              style: const TextStyle(fontSize: 8, color: AppColors.onSurfaceVariant),
+                              style: TextStyle(fontSize: 8, color: colors.onSurfaceVariant),
                             ),
                         ],
                       ),
@@ -151,8 +146,9 @@ class _StepHistoryScreenState extends State<StepHistoryScreen> {
               margin: const EdgeInsets.only(bottom: 8),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: colors.surface,
                 borderRadius: BorderRadius.circular(14),
+                border: colors.cardBorder != null ? Border.all(color: colors.cardBorder!) : null,
               ),
               child: Row(
                 children: [
@@ -164,7 +160,7 @@ class _StepHistoryScreenState extends State<StepHistoryScreen> {
                       child: LinearProgressIndicator(
                         value: ratio,
                         minHeight: 8,
-                        backgroundColor: AppColors.surfaceVariant,
+                        backgroundColor: colors.surfaceVariant,
                         color: AppColors.progressColor(ratio),
                       ),
                     ),
@@ -179,4 +175,6 @@ class _StepHistoryScreenState extends State<StepHistoryScreen> {
       ),
     );
   }
+
+  bool isDark(BuildContext context) => Theme.of(context).brightness == Brightness.dark;
 }

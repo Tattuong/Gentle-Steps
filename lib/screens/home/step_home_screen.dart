@@ -12,13 +12,14 @@ class StepHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
     final provider = context.watch<StepProvider>();
     final locale = Localizations.localeOf(context).languageCode;
     final dateStr = DateFormat('EEEE, dd/MM/yyyy', locale).format(DateTime.now());
     final pct = (provider.progress * 100).round();
 
     return Container(
-      decoration: const BoxDecoration(gradient: AppColors.softGradient),
+      decoration: BoxDecoration(gradient: colors.softGradient),
       child: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
@@ -28,7 +29,7 @@ class StepHomeScreen extends StatelessWidget {
               children: [
                 Text(AppStrings.t(context, 'today'), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w800)),
                 const SizedBox(height: 4),
-                Text(dateStr, style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant)),
+                Text(dateStr, style: TextStyle(fontSize: 13, color: colors.onSurfaceVariant)),
               ],
             ),
             const SizedBox(height: 28),
@@ -46,7 +47,7 @@ class StepHomeScreen extends StatelessWidget {
                     ),
                     Text(
                       AppStrings.t(context, 'progress', params: {'pct': '$pct'}),
-                      style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 13),
+                      style: TextStyle(color: colors.onSurfaceVariant, fontSize: 13),
                     ),
                   ],
                 ),
@@ -55,8 +56,9 @@ class StepHomeScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.08),
+                color: colors.primary.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(16),
+                border: colors.cardBorder != null ? Border.all(color: colors.cardBorder!.withValues(alpha: 0.5)) : null,
               ),
               child: Row(
                 children: [
@@ -115,12 +117,11 @@ class _PermissionBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
+
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(20),
-      ),
+      decoration: colors.cardDecoration(),
       child: Column(
         children: [
           const Text('📱', style: TextStyle(fontSize: 48)),
@@ -133,7 +134,7 @@ class _PermissionBanner extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             AppStrings.t(context, 'sensorOffSub'),
-            style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 13),
+            style: TextStyle(color: colors.onSurfaceVariant, fontSize: 13),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
@@ -164,40 +165,36 @@ class _MetricTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
+
     return Container(
       width: wide ? double.infinity : null,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 3)),
-        ],
-      ),
+      decoration: colors.cardDecoration(radius: 18),
       child: Row(
         children: [
           Container(
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.12),
+              color: colors.primary.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: AppColors.primary, size: 20),
+            child: Icon(icon, color: colors.primary, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                Text(label, style: TextStyle(fontSize: 12, color: colors.onSurfaceVariant)),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: [
                     Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
                     const SizedBox(width: 4),
-                    Text(unit, style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                    Text(unit, style: TextStyle(fontSize: 12, color: colors.onSurfaceVariant)),
                   ],
                 ),
               ],

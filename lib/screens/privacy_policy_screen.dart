@@ -8,13 +8,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppStrings.t(context, 'privacyPolicy')),
-        backgroundColor: Colors.white,
-        foregroundColor: AppColors.onSurface,
-        elevation: 0,
-      ),
+      appBar: AppBar(title: Text(AppStrings.t(context, 'privacyPolicy'))),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
@@ -25,7 +22,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             AppStrings.t(context, 'privacyPolicyBody'),
-            style: const TextStyle(fontSize: 14, height: 1.6, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 14, height: 1.6, color: colors.onSurfaceVariant),
           ),
         ],
       ),

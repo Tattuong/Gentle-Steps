@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/constants/app_colors.dart';
+
 class AppDivider extends StatelessWidget {
   final double indent;
   final double endIndent;
@@ -17,7 +19,7 @@ class AppDivider extends StatelessWidget {
     return Divider(
       height: 1,
       thickness: 1,
-      color: const Color(0xFFF0F2F5),
+      color: AppColors.of(context).divider,
       indent: indent,
       endIndent: endIndent,
     );

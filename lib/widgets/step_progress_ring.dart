@@ -51,6 +51,7 @@ class _StepProgressRingState extends State<StepProgressRing> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppColors.of(context);
     final progress = widget.goal == 0 ? 0.0 : (widget.steps / widget.goal).clamp(0.0, 1.0);
     final color = AppColors.progressColor(progress);
     final formatted = NumberFormat.decimalPattern().format(widget.steps);
@@ -65,7 +66,7 @@ class _StepProgressRingState extends State<StepProgressRing> with SingleTickerPr
           children: [
             CustomPaint(
               size: Size(widget.size, widget.size),
-              painter: _StepRingPainter(progress: progress, color: color),
+              painter: _StepRingPainter(progress: progress, color: color, isDark: Theme.of(context).brightness == Brightness.dark),
             ),
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -80,7 +81,7 @@ class _StepProgressRingState extends State<StepProgressRing> with SingleTickerPr
                   style: TextStyle(
                     fontSize: widget.size * 0.16,
                     fontWeight: FontWeight.w800,
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                     height: 1.1,
                   ),
                 ),
@@ -88,7 +89,7 @@ class _StepProgressRingState extends State<StepProgressRing> with SingleTickerPr
                   '/ ${NumberFormat.decimalPattern().format(widget.goal)}',
                   style: TextStyle(
                     fontSize: widget.size * 0.055,
-                    color: AppColors.onSurfaceVariant,
+                    color: colors.onSurfaceVariant,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -104,8 +105,9 @@ class _StepProgressRingState extends State<StepProgressRing> with SingleTickerPr
 class _StepRingPainter extends CustomPainter {
   final double progress;
   final Color color;
+  final bool isDark;
 
-  _StepRingPainter({required this.progress, required this.color});
+  _StepRingPainter({required this.progress, required this.color, required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -114,7 +116,7 @@ class _StepRingPainter extends CustomPainter {
     const stroke = 16.0;
 
     final bgPaint = Paint()
-      ..color = color.withValues(alpha: 0.1)
+      ..color = color.withValues(alpha: isDark ? 0.18 : 0.1)
       ..style = PaintingStyle.stroke
       ..strokeWidth = stroke
       ..strokeCap = StrokeCap.round;
@@ -155,5 +157,5 @@ class _StepRingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_StepRingPainter old) =>
-      old.progress != progress || old.color != color;
+      old.progress != progress || old.color != color || old.isDark != isDark;
 }
