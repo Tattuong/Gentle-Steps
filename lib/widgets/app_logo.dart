@@ -21,7 +21,6 @@ class AppLogo extends StatelessWidget {
       height: size,
       decoration: withShadow
           ? BoxDecoration(
-              borderRadius: BorderRadius.circular(size * 0.28),
               boxShadow: [
                 BoxShadow(
                   color: colors.primary.withValues(alpha: 0.35),
@@ -31,14 +30,11 @@ class AppLogo extends StatelessWidget {
               ],
             )
           : null,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(size * 0.28),
-        child: Image.asset(
-          'assets/logo.png',
-          width: size,
-          height: size,
-          fit: BoxFit.cover,
-        ),
+      child: Image.asset(
+        'assets/logo.png',
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
       ),
     );
   }

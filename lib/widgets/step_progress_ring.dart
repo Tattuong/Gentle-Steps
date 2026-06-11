@@ -9,12 +9,14 @@ class StepProgressRing extends StatefulWidget {
   final int steps;
   final int goal;
   final double size;
+  final List<Color>? ringColors;
 
   const StepProgressRing({
     super.key,
     required this.steps,
     required this.goal,
     this.size = 220,
+    this.ringColors,
   });
 
   @override
@@ -66,7 +68,12 @@ class _StepProgressRingState extends State<StepProgressRing> with SingleTickerPr
           children: [
             CustomPaint(
               size: Size(widget.size, widget.size),
-              painter: _StepRingPainter(progress: progress, color: color, isDark: Theme.of(context).brightness == Brightness.dark),
+              painter: _StepRingPainter(
+                progress: progress,
+                color: color,
+                isDark: Theme.of(context).brightness == Brightness.dark,
+                ringColors: widget.ringColors,
+              ),
             ),
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -106,8 +113,14 @@ class _StepRingPainter extends CustomPainter {
   final double progress;
   final Color color;
   final bool isDark;
+  final List<Color>? ringColors;
 
-  _StepRingPainter({required this.progress, required this.color, required this.isDark});
+  _StepRingPainter({
+    required this.progress,
+    required this.color,
+    required this.isDark,
+    this.ringColors,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -124,10 +137,11 @@ class _StepRingPainter extends CustomPainter {
     canvas.drawCircle(center, radius, bgPaint);
 
     if (progress > 0) {
+      final gradientColors = ringColors ?? [color.withValues(alpha: 0.5), color, AppColors.secondary];
       final fgPaint = Paint()
         ..shader = SweepGradient(
           startAngle: -math.pi / 2,
-          colors: [color.withValues(alpha: 0.5), color, AppColors.secondary],
+          colors: gradientColors,
         ).createShader(Rect.fromCircle(center: center, radius: radius))
         ..style = PaintingStyle.stroke
         ..strokeWidth = stroke
@@ -157,5 +171,5 @@ class _StepRingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_StepRingPainter old) =>
-      old.progress != progress || old.color != color || old.isDark != isDark;
+      old.progress != progress || old.color != color || old.isDark != isDark || old.ringColors != ringColors;
 }

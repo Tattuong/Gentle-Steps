@@ -9,6 +9,7 @@ import 'core/services/storage_service.dart';
 import 'core/services/widget_service.dart';
 import 'core/themes/app_theme.dart';
 import 'providers/locale_provider.dart';
+import 'providers/shop_provider.dart';
 import 'providers/step_provider.dart';
 import 'providers/theme_provider.dart';
 import 'screens/splash_screen.dart';
@@ -41,6 +42,13 @@ class GentleStepsApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => StepProvider()),
+        ChangeNotifierProvider(
+          create: (_) {
+            final shop = ShopProvider();
+            shop.init();
+            return shop;
+          },
+        ),
       ],
       child: Consumer2<ThemeProvider, LocaleProvider>(
         builder: (context, themeProvider, localeProvider, _) {

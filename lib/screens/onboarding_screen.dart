@@ -21,6 +21,8 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppColors.of(context);
+    final compact = MediaQuery.sizeOf(context).height < 680;
+    final logoSize = compact ? 88.0 : 120.0;
     final features = [
       ('👟', AppStrings.t(context, 'onboardingFeature1')),
       ('📊', AppStrings.t(context, 'onboardingFeature2')),
@@ -31,29 +33,29 @@ class OnboardingScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(gradient: colors.softGradient),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
             child: Column(
               children: [
-                const Spacer(),
-                const AppLogo(size: 120),
-                const SizedBox(height: 32),
+                SizedBox(height: compact ? 8 : 24),
+                AppLogo(size: logoSize),
+                SizedBox(height: compact ? 20 : 32),
                 Text(
                   AppStrings.t(context, 'onboardingTitle'),
-                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w800),
+                  style: TextStyle(fontSize: compact ? 24 : 28, fontWeight: FontWeight.w800),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   AppStrings.t(context, 'onboardingSubtitle'),
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: colors.onSurfaceVariant, fontSize: 16, height: 1.5),
+                  style: TextStyle(color: colors.onSurfaceVariant, fontSize: compact ? 14 : 16, height: 1.5),
                 ),
-                const SizedBox(height: 36),
+                SizedBox(height: compact ? 20 : 36),
                 ...features.map(
                   (f) => Container(
                     margin: const EdgeInsets.only(bottom: 12),
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(compact ? 12 : 16),
                     decoration: BoxDecoration(
                       color: colors.surface.withValues(alpha: 0.85),
                       borderRadius: BorderRadius.circular(16),
@@ -61,14 +63,19 @@ class OnboardingScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Text(f.$1, style: const TextStyle(fontSize: 24)),
+                        Text(f.$1, style: TextStyle(fontSize: compact ? 20 : 24)),
                         const SizedBox(width: 14),
-                        Expanded(child: Text(f.$2, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
+                        Expanded(
+                          child: Text(
+                            f.$2,
+                            style: TextStyle(fontSize: compact ? 13 : 14, fontWeight: FontWeight.w500),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-                const Spacer(),
+                SizedBox(height: compact ? 24 : 40),
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(

@@ -6,11 +6,13 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_strings.dart';
 import '../../core/constants/step_constants.dart';
 import '../../providers/locale_provider.dart';
+import '../../providers/shop_provider.dart';
 import '../../providers/step_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../widgets/app_divider.dart';
 import '../privacy_policy_screen.dart';
 import '../reminders/step_reminders_screen.dart';
+import '../shop/shop_screen.dart';
 
 class StepSettingsScreen extends StatefulWidget {
   const StepSettingsScreen({super.key});
@@ -39,6 +41,7 @@ class _StepSettingsScreenState extends State<StepSettingsScreen> {
     final themeProvider = context.watch<ThemeProvider>();
     final localeProvider = context.watch<LocaleProvider>();
     final stepProvider = context.watch<StepProvider>();
+    final shop = context.watch<ShopProvider>();
 
     return SafeArea(
       child: ListView(
@@ -89,6 +92,25 @@ class _StepSettingsScreenState extends State<StepSettingsScreen> {
               ],
               selected: {localeProvider.locale.languageCode},
               onSelectionChanged: (s) => localeProvider.setLocale(Locale(s.first)),
+            ),
+          ),
+          const SizedBox(height: 16),
+          _Section(
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colors.primary.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text('⭐', textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
+              ),
+              title: Text(AppStrings.t(context, 'shop'), style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text('${shop.coins} ${AppStrings.t(context, 'stars')}', style: const TextStyle(fontSize: 12)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ShopScreen())),
             ),
           ),
           const SizedBox(height: 16),
